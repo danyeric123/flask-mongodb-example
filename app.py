@@ -1,4 +1,5 @@
 from flask import Flask, render_template,request
+from flask.helpers import url_for
 from flask_pymongo import PyMongo
 from dotenv import load_dotenv
 import datetime
@@ -6,6 +7,8 @@ from bson.objectid import ObjectId
 from bson import json_util
 import os
 import json
+
+from werkzeug.utils import redirect
 
 load_dotenv()
 
@@ -25,6 +28,10 @@ def index():
   all_todos = todos.find()
   return render_template('index.html', todos=all_todos)
 
+@app.route('/delete/<oid>')
+def delete_todo(oid):
+  todos.delete_one({'_id': ObjectId(oid)})
+  return redirect(url_for('index'))
 
 if __name__ == '__main__':
   app.run()
