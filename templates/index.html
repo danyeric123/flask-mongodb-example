@@ -11,15 +11,25 @@
 		<input type="text" name="new-todo" placeholder="Enter todo">
 		<button type="submit">Add</button>
 	</form>
-	<ul>
-		{% for todo in todos %}
-			<li>{{todo.content}} 
-				<a href="{{ url_for('delete_todo',oid=todo._id) }}">
-					<button style="background-color:red;">Delete</button>
-				</a>
-			</li>
-		{% endfor %}
-	</ul>
+	<table>
+		<thead>
+			<tr>
+				<th>Content</th>
+				<th>Completed?</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for todo in todos %}
+				<tr>
+					<td>{{todo.content}}</td>
+					<td>{{"Y" if todo.complete else "N" }}</td>
+					<td><a href="{{ url_for('delete_todo',id=todo.id) }}">
+							<button style="background-color:red;">Delete</button>
+						</a></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 	
 </body>
 </html>
