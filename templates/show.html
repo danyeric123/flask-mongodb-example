@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{todo.content}}</h1>
+<p>{{ "Completed" if todo.complete else "Not Completed"}}</p>
+
+<a href="{{url_for('update',id=todo.id)}}">
+  <button>Edit</button>
+</a>
+
+{% endblock content %}

@@ -1,12 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Flask Todo</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block content %}
+
 	<form action="{{ url_for('index') }}" method="POST">
 		<input type="text" name="new-todo" placeholder="Enter todo">
 		<button type="submit">Add</button>
@@ -21,8 +16,8 @@
 		<tbody>
 			{% for todo in todos %}
 				<tr>
-					<td>{{todo.content}}</td>
-					<td>{{"Y" if todo.complete else "N" }}</td>
+					<td><a href="{{ url_for('show_todo',id=todo.id) }}">{{todo.content}}</a></td>
+					<td>{{"Yes" if todo.complete else "No" }}</td>
 					<td><a href="{{ url_for('delete_todo',id=todo.id) }}">
 							<button style="background-color:red;">Delete</button>
 						</a></td>
@@ -30,6 +25,5 @@
 			{% endfor %}
 		</tbody>
 	</table>
-	
-</body>
-</html>
+{% endblock content %}
+
