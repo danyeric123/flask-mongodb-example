@@ -1,8 +1,10 @@
 from flask import Flask, render_template,request
 from flask.helpers import url_for
 from flask_mongoengine import MongoEngine
+from flask_cors import CORS
 from dotenv import load_dotenv
 import os
+import json
 
 from werkzeug.utils import redirect
 
@@ -12,6 +14,7 @@ load_dotenv()
 
 DATABASE_URL = os.getenv('DATABASE_URL')
 app = Flask(__name__)
+CORS(app)
 
 # app.config['MONGO_URI'] = DATABASE_URL
 app.config['MONGODB_SETTINGS'] = {
@@ -27,7 +30,7 @@ def index():
     new_todo = request.form.get('new-todo')
     Todo(content=new_todo).save()
   all_todos = Todo.objects()
-  return render_template('index.html', todos=all_todos)
+  return all_todos.to_json()
 
 @app.route('/delete/<id>')
 def delete_todo(id):
